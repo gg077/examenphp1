@@ -17,6 +17,7 @@ if (isset($_POST['submit'])) {
     $user->first_name = trim($_POST['first_name']);
     $user->last_name = trim($_POST['last_name']);
     $user->password = trim($_POST['password']);
+    $user->role = trim($_POST['role']);
     $user->save();
 
     if (!empty($user)) {

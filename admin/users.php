@@ -3,15 +3,27 @@ require_once("includes/header.php");
 require_once("includes/sidebar.php");
 require_once("includes/content-top2.php");
 
+
 if (isset($_GET['delete'])) {
     //$_GET['delete'] = id
     $user = User::find_by_id($_GET['delete']);
     if ($user) {
         $user->soft_delete();
-        header("location:users.php") .
+        header("location:users.php");
         exit;
     } else {
         "<script>alert('Gebruiker niet gevonden')</script>";
+    }
+}
+if (isset($_GET['restore'])) {
+    $user = User::find_by_id($_GET['restore']);
+
+    if ($user) {
+        $user->restore();
+        header("location:users.php");
+        exit;
+    } else {
+        echo "<script>alert('Gebruiker niet gevonden');</script>";
     }
 }
 
@@ -50,6 +62,7 @@ if (isset($_GET['delete'])) {
 							<th>paswoord</th>
 							<th>Voornaam</th>
 							<th>Familienaam</th>
+                            <th>Role</th>
 							<th>Created_at</th>
 							<th>Deleted at</th>
 							<th>Actions</th>
@@ -58,21 +71,31 @@ if (isset($_GET['delete'])) {
 						<tbody>
                         <?php $active_users = User::find_all(); ?>
                         <?php foreach ($active_users as $user): ?>
-                            <?php if($user->deleted_at == '0000-00-00 00:00:00'): ?>							<tr>
-								<td><?= $user->id; ?></td>
+                            <?php if($user->deleted_at == '0000-00-00 00:00:00'): ?>
+                                <tr <?= ($user->role === 'admin') ? 'style="background-color: #ffeeba;"' : ''; ?>>
+                                <td><?= $user->id; ?></td>
 								<td><span><img height="40" width="40" class="avatar me-3"
 								               src="../admin/assets/static/images/faces/8.jpg"
 								               alt=""></span><?= $user->username; ?></td>
 								<td><?= $user->password; ?></td>
 								<td><?= $user->first_name; ?></td>
 								<td><?= $user->last_name; ?></td>
+                                <td>
+                                    <?php if ($user->role === 'admin'): ?>
+                                        <span class="badge bg-danger">Admin</span>
+                                    <?php else: ?>
+                                        <span class="badge bg-secondary">User</span>
+                                    <?php endif; ?>
+                                </td>
 								<td><?= $user->created_at; ?></td>
 								<td><?= $user->deleted_at; ?></td>
 								<td class="d-flex justify-content-around">
-									<a href="users.php?delete=<?= $user->id; ?>"
-									   onclick="return confirm('Weet je zeker dat je deze gebruiker wil verwijderen?')">
-										<i class="bi bi-trash text-danger"></i>
-									</a>
+                                    <?php if ($session->is_admin()): ?>
+                                        <a href="users.php?delete=<?= $user->id; ?>"
+                                           onclick="return confirm('Weet je zeker dat je deze gebruiker wil verwijderen?')">
+                                            <i class="bi bi-trash text-danger"></i>
+                                        </a>
+                                    <?php endif; ?>
 									<a href="edit_user.php?id=<?= $user->id; ?>">
 										<i class="bi bi-eye text-primary"></i>
 									</a>
@@ -92,6 +115,7 @@ if (isset($_GET['delete'])) {
 							<th>paswoord</th>
 							<th>Voornaam</th>
 							<th>Familienaam</th>
+                            <th>role</th>
 							<th>Created_at</th>
 							<th>Deleted at</th>
 							<th>Actions</th>
@@ -102,6 +126,7 @@ if (isset($_GET['delete'])) {
                         <?php foreach ($inactive_users as $user): ?>
                             <?php if($user->deleted_at !== '0000-00-00 00:00:00'): ?>
 							<tr>
+                                <tr <?= ($user->role === 'admin') ? 'style="background-color: #ffeeba;"' : ''; ?>>
 								<td><?= $user->id; ?></td>
 								<td><span><img height="40" width="40" class="avatar me-3"
 								               src="../admin/assets/static/images/faces/8.jpg"
@@ -109,13 +134,22 @@ if (isset($_GET['delete'])) {
 								<td><?= $user->password; ?></td>
 								<td><?= $user->first_name; ?></td>
 								<td><?= $user->last_name; ?></td>
+                                    <td>
+                                        <?php if ($user->role === 'admin'): ?>
+                                            <span class="badge bg-danger">Admin</span>
+                                        <?php else: ?>
+                                            <span class="badge bg-secondary">User</span>
+                                        <?php endif; ?>
+                                    </td>
 								<td><?= $user->created_at; ?></td>
 								<td><?= $user->deleted_at; ?></td>
 								<td class="d-flex justify-content-around">
-									<a href="users.php?restore=<?= $user->id; ?>"
-									   onclick="return confirm('Weet je zeker dat je deze gebruiker wil herstellen?')">
-										<i class="bi bi-bootstrap-reboot text-warning"></i>
-									</a>
+                                    <?php if ($session->is_admin()): ?>
+                                        <a href="users.php?restore=<?= $user->id; ?>"
+                                           onclick="return confirm('Weet je zeker dat je deze gebruiker wil herstellen?')">
+                                            <i class="bi bi-bootstrap-reboot text-warning"></i>
+                                        </a>
+                                    <?php endif; ?>
 									<a href="edit_user.php?id=<?= $user->id; ?>">
 										<i class="bi bi-eye text-primary"></i>
 									</a>

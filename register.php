@@ -3,39 +3,42 @@ require_once("includes/header.php");
 
 $the_message = "";
 
+// Controleer of er een foutmelding in de sessie staat en haal deze op
 if (isset($_SESSION['the_message'])) {
     $the_message = $_SESSION['the_message'];
     unset($_SESSION['the_message']); // Verwijder de melding na ophalen
 }
-if (isset($_POST['submit'])) {
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username']);
+    $first_name = trim($_POST['first_name']);
+    $last_name = trim($_POST['last_name']);
     $password = trim($_POST['password']);
-    $confirmpassword = trim($_POST['confirmpassword']);
-    //check als de user bestaat in onze database
-    $user_found = User::verify_user($username, $password);
+    $confirm_password = trim($_POST['confirmpassword']);
 
-    if ($user_found) {
-        $the_message = "This user exists, please login!";
 
-    } elseif ($password === $confirmpassword) {
+    $existing_user = User::find_this_query("SELECT * FROM users WHERE username = ?", [$username]);
+
+    if (!empty($existing_user)) {
+        $the_message = "This username is already taken. Please choose another.";
+    } elseif ($password !== $confirm_password) {
+        $the_message = "Passwords do not match!";
+    } else {
+
         $user = new User();
-        $user->username = trim($_POST['username']);
-        $user->first_name = trim($_POST['first_name']);
-        $user->last_name = trim($_POST['last_name']);
-        $user->password = trim($_POST['password']);
-        $user->create();
+        $user->username = $username;
+        $user->first_name = $first_name;
+        $user->last_name = $last_name;
+        $user->password = password_hash($password, PASSWORD_DEFAULT);
+        $user->role = 'user';
 
-        $the_message = "New user: " . $user->username . " was added to the Database, click below to login!";
-
-        // Zet de boodschap in de sessie voor gebruik na redirect
-        $_SESSION['the_message'] = $the_message;
-
-        // Voer een redirect uit naar dezelfde pagina (zonder POST-data)
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit(); // Stop verdere uitvoering van het script
-    }else{
-        $the_message = "Paswords are not alike!";
-
+        if ($user->create()) {
+            $_SESSION['the_message'] = "New user: " . $user->username . " was successfully registered! You can now login.";
+            header("Location: login.php");
+            exit();
+        } else {
+            $the_message = "An error occurred while creating your account. Please try again.";
+        }
     }
 }
 ?>

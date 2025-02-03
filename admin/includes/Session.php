@@ -1,5 +1,4 @@
 <?php
-
 class Session
 {
     /*properties*/
@@ -11,6 +10,7 @@ class Session
     public function login($user){
         if($user){
             $this->user_id=$_SESSION['user_id']=$user->id;
+            $_SESSION['role'] = $user->role;
             $this->signed_in = true;
         }
     }
@@ -37,6 +37,10 @@ class Session
     }
     public function is_signed_in(){
         return $this->signed_in;
+    }
+    public function is_admin()
+    {
+        return isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
     }
     public function message($msg=""){
         if(!empty($msg)){
@@ -65,4 +69,3 @@ class Session
 }
 $session = new Session();
 ?>
-

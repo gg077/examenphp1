@@ -4,6 +4,7 @@ require_once("includes/header.php");
 require_once("includes/sidebar.php");
 require_once("includes/content-top2.php");
 
+
 // Er wordt gecontroleerd of de gebruiker is ingelogd. Als dit niet het geval is, wordt de gebruiker doorgestuurd naar de loginpagina.
 if (!$session->is_signed_in()) {
     header("location:login.php");

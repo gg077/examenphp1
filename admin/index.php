@@ -1,7 +1,8 @@
 <?php
 require_once("includes/header.php");
-if(!$session->is_signed_in()){
+if (!$session->is_signed_in() || !$session->is_admin()) {
     header("location:login.php");
+    exit();
 }
 require_once("includes/sidebar.php");
 require_once("includes/content-top.php");

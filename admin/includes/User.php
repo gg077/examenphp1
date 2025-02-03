@@ -9,17 +9,36 @@ class User extends Db_object
     public $password;
     public $first_name;
     public $last_name;
+
+    public $role;
     public $created_at;
     public $deleted_at;
+
     protected static $table_name = 'users';
     //methods
 
-    public static function verify_user($username,$password){
+    public function restore(){
+        global $database;
+        $table = static::$table_name;
+        $escaped_id = $database->escape_string($this->id);
+
+        // Set deleted_at to the default '0000-00-00 00:00:00' instead of NULL
+        $sql = "UPDATE $table SET deleted_at = '0000-00-00 00:00:00' WHERE id = ?";
+        $params = [$escaped_id];
+
+        $result = $database->query($sql, $params);
+
+        if ($result) {
+            error_log("Gebruiker ID $escaped_id is hersteld.");
+        } else {
+            error_log("Fout bij herstel van gebruiker ID $escaped_id.");
+        }
+    }
+    public static function verify_user($username, $password){
         global $database;
         $username = $database->escape_string($username);
         $password = $database->escape_string($password);
 
-        // select * from users where username = $username and password = $password
         $sql = "SELECT * FROM ". self::$table_name ." WHERE ";
         $sql .= "username = ? ";
         $sql .= "AND password = ?";
@@ -27,7 +46,16 @@ class User extends Db_object
 
         $the_result_array = self::find_this_query($sql,[$username,$password]);
 
-        return !empty($the_result_array) ? array_shift($the_result_array) : false;
+        if (!empty($the_result_array)) {
+            $user = array_shift($the_result_array);
+
+            if (empty($user->role)) {
+                $user->role = 'user';
+            }
+            return $user;
+        } else {
+            return false;
+        }
     }
 
     /* CRUD */
@@ -40,7 +68,8 @@ class User extends Db_object
             'first_name'=>$this->first_name,
             'last_name'=>$this->last_name,
             'created_at'=>$this->created_at,
-            'deleted_at'=>$this->deleted_at
+            'deleted_at'=>$this->deleted_at,
+            'role'=>$this->role,
         ];
     }
 

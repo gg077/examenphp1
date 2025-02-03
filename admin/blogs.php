@@ -24,6 +24,17 @@ if (isset($_GET['delete'])) {
         echo "<script>alert('Blog niet gevonden')</script>";
     }
 }
+if (isset($_GET['restore'])) {
+    $user = Blog::find_by_id($_GET['restore']);
+
+    if ($user) {
+        $user->restore();
+        header("location:blogs.php");
+        exit;
+    } else {
+        echo "<script>alert('Blog niet gevonden');</script>";
+    }
+}
 ?>
 
 <section class="section">

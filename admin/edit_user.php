@@ -3,6 +3,7 @@ require_once("includes/header.php");
 require_once("includes/sidebar.php");
 require_once("includes/content-top.php");
 
+
 //// Controleer of er een melding in de sessie staat
 //$the_message = "";
 //if (isset($_SESSION['the_message'])) {

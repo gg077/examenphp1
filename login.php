@@ -1,28 +1,36 @@
 <?php
 require_once("includes/header.php");
 
-?>
-<?php
-	$the_message = "";
-    if($session->is_signed_in()){
-        header("location:index.php");
-    }
-    if(isset($_POST['submit'])){
-        $username=trim($_POST['username']);
-        $password=trim($_POST['password']);
-        //check als de user bestaat in onze database
-        $user_found = User::verify_user($username, $password);
+$the_message = "";
+$username = ""; // Initialize username variable
 
-		if($user_found){
-			$session->login($user_found);
-			header("location:admin/index.php");
-		}else{
-			$the_message = "Your password and username FAILED!";
-		}
-    }else{
-		$username = "";
-		$password = "";
+if($session->is_signed_in()){
+    header("location:index.php");
+}
+
+if(isset($_POST['submit'])){
+    $username = trim($_POST['username']);
+    $password = trim($_POST['password']);
+
+    //check als de user bestaat in onze database
+    $user_found = User::verify_user($username, $password);
+
+    if ($user_found) {
+        $session->login($user_found);
+
+        if ($user_found->role === 'admin') {
+            header("location: admin/index.php");
+        } elseif ($user_found->role === 'user') {
+            header("location: blogs.php");
+        } else {
+            header("location: index.php");
+        }
+
+        exit();
+    } else {
+        $the_message = "Gebruiker niet gevonden";
     }
+}
 ?>
 <div id="auth">
     <div class="row h-100">

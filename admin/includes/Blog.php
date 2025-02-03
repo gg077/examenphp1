@@ -11,6 +11,24 @@ class Blog extends Db_object
     public $deleted_at;
     protected static $table_name = 'blogs';
 
+    public function restore(){
+        global $database;
+        $table = static::$table_name;
+        $escaped_id = $database->escape_string($this->id);
+
+        // Set deleted_at to the default '0000-00-00 00:00:00' instead of NULL
+        $sql = "UPDATE $table SET deleted_at = '0000-00-00 00:00:00' WHERE id = ?";
+        $params = [$escaped_id];
+
+        $result = $database->query($sql, $params);
+
+        if ($result) {
+            error_log("Blog $escaped_id is hersteld.");
+        } else {
+            error_log("Fout bij herstel van Blog $escaped_id.");
+        }
+    }
+
     public function get_properties(){
         return[
             'id'=> $this->id,
