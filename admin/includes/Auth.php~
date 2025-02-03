@@ -3,8 +3,6 @@
 <!--Het in gang krijgen van user / admin... kwam in een knop terecht en geraakte er niet meer uit...-->
 <!--Het in gang krijgen van user / admin... kwam in een knop terecht en geraakte er niet meer uit...-->
 
-<!--Ik probeerde via session te doen maar werkte heel project niet meer dus...-->
-
 <?php
 
 class Auth

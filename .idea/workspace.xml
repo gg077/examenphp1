@@ -4,24 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3788116f-3e89-4c0c-90d4-8606d5e02e49" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/afeb6791-f152-4f48-a52d-765cbcdcbdc4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/afeb6791-f152-4f48-a52d-765cbcdcbdc4.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/add_user.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/add_user.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/blogs.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/blogs.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/edit_photo.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/edit_photo.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/edit_user.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/edit_user.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/includes/Blog.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/includes/Blog.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/includes/Session.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/includes/Session.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/includes/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/includes/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/photos.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/photos.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/upload.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/upload.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/users.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/users.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/login.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/register.php" beforeDir="false" afterPath="$PROJECT_DIR$/register.php" afterDir="false" />
-    </list>
+    <list default="true" id="3788116f-3e89-4c0c-90d4-8606d5e02e49" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -79,7 +62,7 @@
       <workItem from="1738579315102" duration="790000" />
       <workItem from="1738580128481" duration="539000" />
       <workItem from="1738580693227" duration="309000" />
-      <workItem from="1738581021240" duration="394000" />
+      <workItem from="1738581021240" duration="776000" />
     </task>
     <servers />
   </component>
